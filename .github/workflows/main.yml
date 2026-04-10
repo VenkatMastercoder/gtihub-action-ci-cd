@@ -26,4 +26,4 @@ jobs:
       run: npm ci  # Command to install dependencies using npm ci
  
     - name: Start application  # Step to start the application
-      run: pm2 restart my-app # Command to restart the application using pm2
+      run: pm2 restart my-app-2 # Command to restart the application using pm2
