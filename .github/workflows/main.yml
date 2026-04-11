@@ -9,11 +9,12 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: Install
-        run: npm i
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-      - name: Test
-        run: npm run test
-
-      - name: Start App
-        run: pm2 restart app
+      - name: Deploy
+        run: |
+          rsync -av --delete ./ /home/ubuntu/app/github-action-ci-cd/
+          cd /home/ubuntu/app/github-action-ci-cd
+          npm i
+          pm2 restart app
