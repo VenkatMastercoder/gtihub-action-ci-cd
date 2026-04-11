@@ -1,29 +1,19 @@
-name: Node.js CI/CD  # Name of the workflow
+name: CI/CD Pipeline
 
 on:
-  push:  # Trigger the workflow on push events
-    branches: [ "master" ]  # Only trigger for the 'master' branch
+  push:
+    branches: [main]
 
 jobs:
-  build:
-    runs-on: self-hosted  # Specifies that the job should run on a self-hosted runner
+  deploy:
+    runs-on: self-hosted
 
-    strategy:  # Specifies the build matrix for running on different versions of Node.js
-      matrix:
-        node-version: [18.x]  # Only one version specified here
+    steps:
+      - name: Install
+        run: npm i
 
-    steps:  # Define the steps to be executed in the job
-    - name: Checkout code  # Step to checkout the repository code
-      uses: actions/checkout@v4  # Action to checkout code from the repository
+      - name: Test
+        run: npm run test
 
-    - name: Use Node.js ${{ matrix.node-version }}  # Step to set up Node.js environment
-      uses: actions/setup-node@v3  # Action to set up Node.js
-      with:
-        node-version: ${{ matrix.node-version }}  # Specify the Node.js version
-        cache: 'npm'  # Cache npm dependencies for faster builds
-
-    - name: Install dependencies  # Step to install Node.js dependencies
-      run: npm ci  # Command to install dependencies using npm ci
- 
-    - name: Start application  # Step to start the application
-      run: pm2 restart my-app-2 # Command to restart the application using pm2
+      - name: Start App
+        run: pm2 restart app
