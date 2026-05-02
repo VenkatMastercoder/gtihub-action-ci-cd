@@ -17,4 +17,5 @@ jobs:
           rsync -av --delete ./ /home/ubuntu/github-action-ci-cd/
           cd /home/ubuntu/github-action-ci-cd
           npm i
+          npm run test
           pm2 restart app
